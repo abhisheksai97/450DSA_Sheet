@@ -1,0 +1,31 @@
+vector<int> topView(Node *root)
+    {
+        vector<int> ans;
+        map<int,int> nodes;
+        queue<pair<Node*,int>>q;
+        if(root==NULL)
+        return ans;
+        q.push(make_pair(root,0));
+        while(!q.empty()){
+            pair<Node*,int> temp=q.front();
+            q.pop();
+            Node* frontnode=temp.first;
+            int hd=temp.second;
+            // mantain one to one mapping of a node and the horizontal distance..
+            // map me check kro ki age horizontal dist present nhi he to uska bs ek map main entry krdo +uske data ke sath..
+            if(nodes.find(hd)==nodes.end()){
+                nodes[hd]=frontnode->data;
+            }
+            if(frontnode->left){
+                q.push(make_pair(frontnode->left,hd-1));
+            }
+            
+            if(frontnode->right){
+                q.push(make_pair(frontnode->right,hd+1));
+            }
+        }
+        for(auto i:nodes){
+            ans.push_back(i.second);
+        }
+        return ans;
+    }
