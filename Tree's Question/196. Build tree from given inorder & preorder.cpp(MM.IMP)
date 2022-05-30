@@ -1,0 +1,36 @@
+class Solution{
+    public:
+    
+    int findpos(int in[],int n,int element){
+        for(int i=0;i<n;i++){
+            if(in[i]==element){
+                return i;
+            }
+        }
+        return -1;
+    }
+    
+    Node* solve(int in[],int pre[],int n,int instrt,int inend,int & preindex){
+        
+        // base case.. 
+        if(preindex>n || instrt >inend){
+            return NULL;
+        }
+        int element=pre[preindex++];
+        Node* root=new Node(element);
+        int pos=findpos(in,n,element);
+        // now ab left sub tree bna de ..
+        root->left=solve(in,pre,n,instrt,pos-1,preindex);
+        // now ab right sub tree ki call mar de..
+        root->right=solve(in,pre,n,pos+1,inend,preindex);
+        
+        return root;
+    }
+    
+    Node* buildTree(int in[],int pre[], int n)
+    {
+      int preindex=0;
+      Node* root=solve(in,pre,n,0,n-1,preindex);
+      return root;
+    }
+};
