@@ -1,0 +1,29 @@
+ vector <int> bottomView(Node *root) {
+       
+        vector<int> ans;
+        map<int,int> nodes;
+        queue<pair<Node*,int>>q;
+        if(root==NULL)
+        return ans;
+        q.push(make_pair(root,0));
+        while(!q.empty()){
+            pair<Node*,int> temp=q.front();
+            q.pop();
+            Node* frontnode=temp.first;
+            int hd=temp.second;
+            // iddhr condition hta de bs traverse krta ja or node ki value update krta jaa..
+                nodes[hd]=frontnode->data;
+                
+            if(frontnode->left){
+                q.push(make_pair(frontnode->left,hd-1));
+            }
+            
+            if(frontnode->right){
+                q.push(make_pair(frontnode->right,hd+1));
+            }
+        }
+        for(auto i:nodes){
+            ans.push_back(i.second);
+        }
+        return ans;
+    }
