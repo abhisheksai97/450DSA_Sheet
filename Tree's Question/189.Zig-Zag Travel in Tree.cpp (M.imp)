@@ -1,0 +1,35 @@
+// if leftoright_travel=ture-> mtlb hmne jo queue me element dale he vo sidhe dale he or unko sidha print krana hain..
+// else if false.. mtlb hmko queue me last me jakr start krna hain queue ke front tk or har iteration me vector ans me store krwana hain..
+
+ vector <int> zigZagTraversal(Node* root)
+    {  vector<int> result;
+    	// base case..
+    	if(root==NULL)
+    	return result;
+    	
+    	queue<Node*> q;
+    	q.push(root);
+    	bool lefttoright_travel=true;
+    	while(!q.empty()){
+    	    int siz=q.size();
+    	    vector<int> ans(siz);
+    	    // kese inseert krna he data in ans queue l to r / ya r-to-l..
+    	    for(int i=0;i<siz;i++){
+    	         Node * temp=q.front();
+    	         q.pop();
+    	         int index=lefttoright_travel? i: siz-i-1;
+    	         ans[index]=temp->data;
+    	         if(temp->left){
+    	             q.push(temp->left);
+    	         }
+    	         if(temp->right){
+    	             q.push(temp->right);
+    	         }
+    	    }
+    	    lefttoright_travel=!lefttoright_travel;
+    	    for(int i:ans){
+    	        result.push_back(i);
+    	    }
+    	}
+    	return result;
+    }
