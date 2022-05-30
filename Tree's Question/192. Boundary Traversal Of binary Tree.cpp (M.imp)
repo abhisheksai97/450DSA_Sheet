@@ -1,0 +1,64 @@
+void left_travel(Node * root, vector<int> &ans){
+      // base case for left part nodes only.
+      // idhr hmne isme leaf nodes ko store nhi kraya hain..
+      if((root==NULL) ||(root->left==NULL && root->right==NULL) ){
+          return ;
+      }
+      // step1. store the root data in ans here.
+      ans.push_back(root->data);
+      // step2. now check if left exists to left ki call mar varna right me jakr nodes store krwa 
+      if(root->left){
+          left_travel(root->left,ans);
+      }
+      else{
+          left_travel(root->right,ans);
+      }
+      
+  }
+ void leaf_node(Node* root,vector<int> &ans){
+     // inorder(LNR) concept is used here
+     // base case 
+     // step1.. 
+     if(root==NULL)
+     return ;
+     //step2.. age leaf node he tbhi store krwana hain idhr vrna nhi krwaana..
+      if(root->left ==NULL&& root->right==NULL){
+          ans.push_back(root->data);
+          return;
+      }
+      leaf_node(root->left,ans);
+      leaf_node(root->right,ans);
+ }
+ void right_travel(Node * root, vector<int>& ans){
+     // base case..
+     if((root==NULL)||(root->left==NULL && root->right==NULL)){
+         return ;
+     }
+     // step1. koshish kro ki right ki call phle maro .
+     if(root->right){
+         right_travel(root->right,ans);
+     }
+     else{
+         right_travel(root->left,ans);
+     }
+     //step2. ab upper recursion tree me uppr jate wqt (IN_REVERSE ORDER) ans ko store krwa.
+     ans.push_back(root->data);
+ }
+    vector <int> boundary(Node *root)
+    { vector<int> ans;
+   if(root==NULL)
+   return ans;
+   
+   // step1.first store the root here.
+        ans.push_back(root->data);
+    // step2. ab left me jakr leaf node se phle tk ke sare node store krwaloo.
+    left_travel(root->left,ans);
+    // step3. ab leaf nodes store krwaoo.
+     // step3(a): phele left tree ki leaf nodes.
+      leaf_node(root->left,ans);
+      // step3(b): ab roght part ki leaf nodes store krwa le.
+      leaf_node(root->right,ans);
+     // step4: ab rightmost tree me jakr leafe node ke upper se ( in reverse order data ko store krwa (topmost root se phle tak).
+     right_travel(root->right,ans);
+     return ans;
+    }
